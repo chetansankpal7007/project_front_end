@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
 export default function Login() {
     const [username, setuserName] =useState ();
     const [password, setPassword] =useState ();
     const LOGINURL = 'http://localhost:8090/emp/emp-login';
-
+    const navigate = useNavigate();    
 
     const checkUserLogin = async() => {
         let playload = {
@@ -24,17 +25,16 @@ export default function Login() {
             localStorage.setItem('_id', user[0]._id);
             localStorage.setItem('emp_id', user[0].emp_id);
             localStorage.setItem('emp_name', user[0].emp_name);
-            alert("login");
-
+            alert("login");            
+            navigate('/crm');
         } else {
             alert("Please check user name and password");
         }
-
     }
 
 
   return (
-        <div>
+        <div className='login'>
             <form  >
                 <label htmlFor="uname">User Name</label>
                 <input type="text" value={username} onChange={e => {setuserName(e.target.value)}} id="uname" name="firstname" placeholder="Your User Name.."/>
