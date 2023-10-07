@@ -15,7 +15,7 @@ function App() {
           <Routes>
           <Route path="/" element={<Login/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
-          <Route path="/crm" element={<Navbar/>}></Route>
+          <Route path="/crm/*" element={<Navbar/>}></Route>
         </Routes>
          
       </Router>
