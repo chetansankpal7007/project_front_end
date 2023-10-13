@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
 export default function Login() {
     const [username, setuserName] =useState ();
     const [password, setPassword] =useState ();
     const LOGINURL = 'http://localhost:8090/emp/emp-login';
-    const navigate = useNavigate();    
+    const navigate = useNavigate();   
+    
+    useEffect(()=>{
+        if(localStorage.getItem("_id") && localStorage.getItem("emp_id")) {
+            navigate('/crm')
+          }
+    }, [])
 
     const checkUserLogin = async() => {
         let playload = {

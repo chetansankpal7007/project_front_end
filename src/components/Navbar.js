@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 import Emplist from './Emp/Emplist';
@@ -14,7 +14,13 @@ import {
 } from "react-router-dom";
 
 export default function Navbar() {
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
+  useEffect(()=>{
+      if(!localStorage.getItem("_id") && !localStorage.getItem("emp_id")) {
+        navigate('/')
+      }
+  }, [])
+
   const logout = () => {
     localStorage.clear();
     alert("logout");
