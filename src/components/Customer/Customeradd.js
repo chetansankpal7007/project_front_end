@@ -19,10 +19,18 @@ export default function Customeradd() {
    const [product_list, setPList] = useState([]);
    const [is_follow_up, setfollowup] = useState(false); 
 
+   const [f_type, setFType] = useState(''); 
+   const [f_status, setFStatus] = useState(''); 
+   const [f_date, setFDate] = useState(''); 
+   const [f_desc, setFDesc] = useState(''); 
+   const [f_c_id, setFCId] = useState(''); 
+   
+
 
    
   const URL_Product_list = 'http://localhost:8090/product/get-product';
   const URL_ADDAPI = 'http://localhost:8090/customer/add-cust'
+  const URL_FOLLOW_UP = 'http://localhost:8090/follow-up/add-follow-up'
 
   let price = 0;
   let disc = 0;
@@ -65,8 +73,33 @@ export default function Customeradd() {
       "Content-type": "application/json; charset=UTF-8",
     },
   });
+  let data =await res.json();
   if(res.status == 200){
     alert("Customer added");
+    if(is_follow_up) {
+      console.log(data);
+      const follow_up = {
+          "f_id": (Math.floor(Math.random() * 100) + 1),
+          "c_id": data.data._id,    
+          "f_type": f_type,
+          "f_status": f_status,
+          "f_desc": f_desc,
+          "f_date": f_date
+      }
+      let res_foll0w_up = await fetch(URL_FOLLOW_UP, {
+        method: "POST",
+        body: JSON.stringify(follow_up),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      // let data =await res_foll0w_up.json();
+      if(res_foll0w_up.status == 200){
+        alert("follow up added");
+      } else {
+        alert("follow up not added");
+      }
+    }
   } else {
     alert("Customer not added");
   }
@@ -172,34 +205,34 @@ export default function Customeradd() {
           <br/><br/>
           <h3>Follow up Add</h3><br/>
           <label>Type</label>
-          <select>
+          <select value={f_type} onChange={e => {setFType(e.target.value)}}>
             <option value=''>Select type</option>
-            <option value='user'>Call</option>
-            <option value='admin'>sms</option>
-            <option value='admin'>mail</option>
-            <option value='admin'>visite</option>
+            <option value='Call'>Call</option>
+            <option value='sms'>sms</option>
+            <option value='mail'>mail</option>
+            <option value='visite'>visite</option>
           </select><br/>
           {/* {role?.length == 0 && isAdd ?  <span>Please Select role<br/></span> : ''  } <br/>    */}
         
           <label>Status</label>
-          <select>
+          <select value={f_status} onChange={e => {setFStatus(e.target.value)}}>
             <option value=''>Select Status</option>
-            <option value='user'>New</option>
-            <option value='admin'>pending</option>
-            <option value='admin'>Done</option>
-            <option value='admin'>Cancel</option>
+            <option value='New'>New</option>
+            <option value='pending'>pending</option>
+            <option value='Done'>Done</option>
+            <option value='Cancel'>Cancel</option>
           </select><br/>
           {/* {role?.length == 0 && isAdd ?  <span>Please Select role<br/></span> : ''  } <br/>    */}
         
           <label>Description</label>
-        <input placeholder='Description' value={c_desc} onChange={e => {setCdesc(e.target.value)}} type='text' id='emp_contact' /><br/>
+        <input placeholder='Description' value={f_desc} onChange={e => {setFDesc(e.target.value)}} type='text' id='emp_contact' /><br/>
         {/* {contact?.length == 0 && isAdd ?  <span>Please Enter contact no<br/></span> : ''  } <br/>  */}
 
         <label>Date</label>
-        <input placeholder='Date' value={c_date} onChange={e => {setCDate(e.target.value)}} type='text' id='emp_contact' /><br/>
+        <input placeholder='Date' value={f_date} onChange={e => {setFDate(e.target.value)}} type='text' id='emp_contact' /><br/>
         {/* {contact?.length == 0 && isAdd ?  <span>Please Enter contact no<br/></span> : ''  } <br/>        */}
         
-        
+
         </div>
         }
         
