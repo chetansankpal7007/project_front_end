@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function Customerlist() {
   const [custList, setCustList] = useState([]);
   const URL = 'http://localhost:8090/customer/get-cust'
+  
+  const navigate = useNavigate();
+  
 
   useEffect(()=>{
     getCustList();
@@ -12,6 +16,11 @@ export default function Customerlist() {
     let res = await fetch(URL);
     let data =await res.json();
     setCustList(data);
+  }
+  const getDeatils = (id) => {
+    console.log(id);
+    navigate(`/crm/customer-detais/${id}`)
+    
   }
    
 
@@ -35,7 +44,7 @@ export default function Customerlist() {
         <tbody>
         {
           custList?.map((cust)=>{
-          return (<tr  key={cust.p_id}>
+          return (<tr  key={cust._id} onClick={()=> {getDeatils(cust._id)}}>
             <td>{cust.c_id}</td>
             <td>{cust.c_name}</td>
             <td>{cust.c_contact_no}</td>

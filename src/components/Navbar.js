@@ -12,6 +12,7 @@ import {
   Route,
   Link, Routes
 } from "react-router-dom";
+import CustomerDetails from './Customer/CustomerDetails';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -66,7 +67,8 @@ export default function Navbar() {
           <Route path="/productadd" element={<Productadd/>}></Route>          
           <Route path="/productlist" element={<ProductList/>}></Route>
           <Route path="/customeradd" element={<Customeradd/>}></Route>          
-          <Route path="/customerList" element={<Customerlist/>}></Route>
+          <Route path="/customerList" element={<Customerlist/>}></Route>        
+          <Route path="/customer-detais/:id" element={<CustomerDetails/>}></Route>
       </Routes>
     </div>
   )
