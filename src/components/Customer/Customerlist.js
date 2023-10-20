@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Customerlist() {
   const [custList, setCustList] = useState([]);
-  const URL = 'http://localhost:8090/customer/get-cust'
+  const URL = 'http://localhost:8090/customer/get-cust-by-emp'
   
   const navigate = useNavigate();
   
@@ -13,7 +13,17 @@ export default function Customerlist() {
   }, []);
 
   const getCustList = async () => {
-    let res = await fetch(URL);
+    let playload = {
+      _id: localStorage.getItem('_id'),
+      role: localStorage.getItem('role'),
+    }
+    let res = await fetch(URL, {
+      method: "POST",
+      body: JSON.stringify(playload),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
     let data =await res.json();
     setCustList(data);
   }

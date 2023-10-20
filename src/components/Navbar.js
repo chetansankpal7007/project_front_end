@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 import Emplist from './Emp/Emplist';
@@ -16,9 +16,13 @@ import CustomerDetails from './Customer/CustomerDetails';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const [role, setrole] = useState('');
   useEffect(()=>{
       if(!localStorage.getItem("_id") && !localStorage.getItem("emp_id")) {
         navigate('/')
+      } else {
+        setrole(localStorage.getItem('role'))
+        console.log(localStorage.getItem('role'));
       }
   }, [])
 
@@ -37,7 +41,7 @@ export default function Navbar() {
             <i className="fa fa-caret-down"></i>
             </button>
             <div className="dropdown-content">
-            <Link to='/crm/empadd'>Add EMP</Link>
+            { role == 'admin' ? <Link to='/crm/empadd'>Add EMP</Link> : '' } 
             <Link to='/crm/emplist'>EMP List</Link>
             </div>
         </div> 

@@ -30,7 +30,9 @@ export default function Login() {
             console.log(user[0]._id)
             localStorage.setItem('_id', user[0]._id);
             localStorage.setItem('emp_id', user[0].emp_id);
-            localStorage.setItem('emp_name', user[0].emp_name);
+            localStorage.setItem('emp_name', user[0].emp_name);            
+            localStorage.setItem('role', user[0].emp_role);
+            console.log(user[0].emp_role);
             alert("login");            
             navigate('/crm');
         } else {
